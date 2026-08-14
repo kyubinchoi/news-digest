@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.headline_kr }} — 뉴스한입{% endblock %}
+
+{% block content %}
+  <a class="back-link" href="{{ url_for('index') }}">← 목록으로</a>
+
+  <article class="article-detail">
+    <span class="card-source">{{ source }}</span>
+    <h1>{{ article.headline_kr }}</h1>
+
+    <section class="block block-en">
+      <h3>🇺🇸 Easy English</h3>
+      <p class="easy-english">{{ article.easy_english }}</p>
+    </section>
+
+    <section class="block block-kr">
+      <h3>🇰🇷 한국어 설명</h3>
+      <p>{{ article.korean_explanation }}</p>
+    </section>
+
+    {% if article.vocab %}
+    <section class="block block-vocab">
+      <h3>💡 오늘의 단어</h3>
+      <ul class="vocab-list">
+        {% for v in article.vocab %}
+          <li>
+            <span class="vocab-word">{{ v.word }}</span>
+            <span class="vocab-meaning">{{ v.meaning_kr }}</span>
+            {% if v.example %}<span class="vocab-example">"{{ v.example }}"</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <a class="original-link" href="{{ article.url }}" target="_blank" rel="noopener noreferrer">
+      원문 기사 보러가기 ↗
+    </a>
+  </article>
+{% endblock %}

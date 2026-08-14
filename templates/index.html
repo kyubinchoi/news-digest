@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if all_dates %}
+    <nav class="date-nav">
+      {% for d in all_dates %}
+        <a
+          class="date-pill {% if d == digest_date %}active{% endif %}"
+          href="{{ url_for('day', date_str=d.isoformat()) }}"
+        >{{ d.strftime('%m/%d') }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+
+  {% if digest_date %}
+    <h1 class="digest-title">{{ digest_date.strftime('%Y년 %m월 %d일') }} 다이제스트</h1>
+  {% endif %}
+
+  {% if is_empty %}
+    <div class="empty-state">
+      {% if api_key_missing %}
+        <p>⚠️ 아직 Anthropic API 키가 설정되지 않았어요.</p>
+        <p class="muted">.env 파일에 ANTHROPIC_API_KEY를 넣고 서버를 다시 시작해주세요.</p>
+      {% else %}
+        <p>📰 오늘의 뉴스를 준비하고 있어요...</p>
+        <p class="muted">잠시 후 새로고침 해보세요. (보통 1~2분이면 준비돼요)</p>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="card-grid">
+      {% for a in articles %}
+        <a class="card" href="{{ url_for('article_detail', article_id=a.id) }}">
+          <span class="card-source">{{ a.source }}</span>
+          <h2 class="card-headline">{{ a.headline_kr }}</h2>
+          <p class="card-preview">{{ a.korean_explanation }}</p>
+          <span class="card-cta">쉬운 영어로 읽기 →</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

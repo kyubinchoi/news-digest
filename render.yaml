@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: news-digest
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --timeout 120
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: DIGEST_HOUR
+        value: "7"
+      - key: DIGEST_MINUTE
+        value: "0"

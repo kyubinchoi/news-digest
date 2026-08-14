@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}뉴스한입 — 쉬운 영어로 읽는 오늘의 미국 뉴스{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-emoji">🗞️</span>
+      <span class="brand-name">뉴스한입</span>
+    </a>
+    <p class="tagline">미국 뉴스, 쉬운 영어로 한입에</p>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>매일 아침 자동으로 업데이트돼요 · 원문 링크는 각 카드에서 확인할 수 있어요</p>
+  </footer>
+</body>
+</html>
